@@ -1,65 +1,23 @@
-const { ApolloServer, gql } = require('apollo-server-express')
 const express = require('express')
+require('dotenv').config()
+const cors = require('cors')
 
-const PrintfulAPI = require('./datasources/printful') 
-
-const typeDefs = gql`
-  type Product {
-      name: String!
-  }
-
-  type Stripe {
-      price: String
-  }
-
-  type Query {
-      allProducts: [Product]
-      findProduct(id: ID!): Product
-  }
-
-  type OrderConfirmation {
-    success: Boolean!
-    message: String
-    products: [Product]
-  }
-
-  type Mutation {
-      orderProduct(id: ID!): OrderConfirmation
-  }
-`
-
-const resolvers = {
-    Query: {
-      allProducts: (_, __, { dataSources }) =>
-        dataSources.printfulAPI.getAllProducts(),
-    },
-    Mutation: {
-      orderProduct: (root,args) => {
-        const confirmation = {
-        success: true,
-        message: 'sample message',
-        products: [{name: 'tshirt'}]
-        }
-        return confirmation
-      }
-    }
-}
-
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    dataSources: () => ({
-      printfulAPI: new PrintfulAPI()
-    }),
-})
+const chargeRouter = require('./chargeRouter')
+const webhookRouter = require('./webhookRouter')
+const apolloServer = require('./graphql')
 
 const app = express()
-server.applyMiddleware({ app })
+app.use(cors())
+app.use(express.json()) // body parser
+
+app.use('/charge', chargeRouter)
+app.use('/webhook', webhookRouter)
+apolloServer.applyMiddleware({ app })
 
 app.get('/', (req, res) => {
-    res.send('how are you today')
+    res.send('Backend for megalith.supply')
 })
 
 app.listen({ port: 4000 }, () => {
-    console.log(`express at port 4000, apollo at 4000${server.graphqlPath}`)
+    console.log(`express at port 4000, apollo at 4000${apolloServer.graphqlPath}, webhook at 4000/webhook`)
 })

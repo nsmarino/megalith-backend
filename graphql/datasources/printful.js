@@ -1,7 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
 
-const PRINTFUL_API_KEY='xhhc3mad-tp15-y3h4:auo3-mpawbmb7vf80'
-
 class PrintfulAPI extends RESTDataSource {
     constructor() {
         super()
@@ -11,15 +9,36 @@ class PrintfulAPI extends RESTDataSource {
     willSendRequest(request) {
         request.headers.set(
           'Authorization',
-          `Basic ${Buffer.from(PRINTFUL_API_KEY).toString('base64')}`
+          `Basic ${Buffer.from(process.env.PRINTFUL_API_KEY).toString('base64')}`
         );
       }
 
     async getAllProducts() {
       const response = await this.get('store/products')
-      console.log('this is the response',response)
-      const products = response.result.map(item => {return {name: item.name}})
+      // console.log('this is the response',response)
+      const products = response.result
       return products
+    }
+
+    // async getProduct(id) {
+    //   const response = await this.get(`store/products/${id}`)
+    //   // console.log(response.result.sync_variants)
+    //   return {name: response.result.sync_product.name}
+    // }
+
+    async getVariants(id) {
+      const response = await this.get(`store/products/${id}`)
+      // console.log(response.result.sync_variants)
+      const variants = response.result.sync_variants.map(variant => {
+        return {
+          id: variant.id,
+          name: variant.name,
+          retail_price: variant.retail_price,
+          sku: variant.sku,
+        }
+      })
+      console.log(variants)
+      return variants
     }
 
     async createOrder({ external_id, items, recipient }) {
