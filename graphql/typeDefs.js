@@ -5,6 +5,7 @@ const typeDefs = gql`
       id: ID!
       name: String!
       variants: [Variant!]!
+      thumbnail_url: String!
   }
 
   type Variant {

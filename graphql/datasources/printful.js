@@ -15,7 +15,7 @@ class PrintfulAPI extends RESTDataSource {
 
     async getAllProducts() {
       const response = await this.get('store/products')
-      // console.log('this is the response',response)
+      console.log('this is the response',response)
       const products = response.result
       return products
     }
