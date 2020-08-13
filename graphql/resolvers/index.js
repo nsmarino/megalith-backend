@@ -2,6 +2,8 @@ const allProducts = require('./queries/allProducts')
 const findProduct = require('./queries/findProduct')
 const variants = require('./variantsResolver')
 
+const estimateOrderCosts = require('./mutations/estimateOrderCosts')
+
 const resolvers = {
     Query: {
       allProducts,
@@ -11,15 +13,7 @@ const resolvers = {
       variants,
     },
     Mutation: {
-      orderProduct: (root,args) => {
-        // FAKE FILLER CODE, BEWARE.
-        const confirmation = {
-        success: true,
-        message: 'sample message',
-        products: [{name: 'tshirt'}]
-        }
-        return confirmation
-      }
+      estimateOrderCosts,
     }
 }
 

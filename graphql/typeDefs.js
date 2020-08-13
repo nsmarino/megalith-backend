@@ -27,7 +27,36 @@ const typeDefs = gql`
   }
 
   type Mutation {
-      orderProduct(id: ID!): OrderConfirmation
+      estimateOrderCosts(input: EstimateOrderCostsInput!): OrderCosts
+  }
+
+  type OrderCosts {
+    currency: String!
+    shippingRate: Float!
+    taxRate: Float!
+    vatRate: Float!
+  }
+
+  input EstimateOrderCostsInput {
+    recipient: CheckoutAddressInput!
+    items: [CheckoutItemInput!]!
+  }
+
+  input CheckoutItemInput {
+    sync_variant_id: ID!
+    quantity: Int = 1
+  }
+
+  input CheckoutAddressInput {
+    address1: String!
+    address2: String
+    city: String!
+    country_code: String!
+    name: String!
+    email: String
+    phone: String
+    state_code: String
+    zip: String!
   }
 `
 
