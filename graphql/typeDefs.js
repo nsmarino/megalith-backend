@@ -28,6 +28,17 @@ const typeDefs = gql`
 
   type Mutation {
       estimateOrderCosts(input: EstimateOrderCostsInput!): OrderCosts
+      checkout(input: CheckoutInput!): PrintfulOrderInfo
+  }
+
+  type PrintfulOrderInfo {
+    printfulOrderId: ID!
+    orderTotal: String!
+  }
+
+  input CheckoutInput {
+    recipient: CheckoutAddressInput!
+    items: [CheckoutItemInput!]!
   }
 
   type OrderCosts {

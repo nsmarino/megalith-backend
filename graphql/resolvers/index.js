@@ -3,6 +3,7 @@ const findProduct = require('./queries/findProduct')
 const variants = require('./variantsResolver')
 
 const estimateOrderCosts = require('./mutations/estimateOrderCosts')
+const checkout = require('./mutations/checkout')
 
 const resolvers = {
     Query: {
@@ -14,6 +15,7 @@ const resolvers = {
     },
     Mutation: {
       estimateOrderCosts,
+      checkout,
     }
 }
 

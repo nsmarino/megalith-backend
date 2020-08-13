@@ -20,12 +20,6 @@ class PrintfulAPI extends RESTDataSource {
       return products
     }
 
-    // async getProduct(id) {
-    //   const response = await this.get(`store/products/${id}`)
-    //   // console.log(response.result.sync_variants)
-    //   return {name: response.result.sync_product.name}
-    // }
-
     async getVariants(id) {
       const response = await this.get(`store/products/${id}`)
       // console.log(response.result.sync_variants)
@@ -41,10 +35,9 @@ class PrintfulAPI extends RESTDataSource {
       return variants
     }
 
-    async createOrder({ external_id, items, recipient }) {
+    async createOrder({ items, recipient }) {
       try {
         const { result: data } = await this.post(`orders`, {
-          external_id,
           items,
           recipient,
         });
@@ -67,6 +60,12 @@ class PrintfulAPI extends RESTDataSource {
         console.error(err);
       }
     }
+
+// async getProduct(id) {
+//   const response = await this.get(`store/products/${id}`)
+//   // console.log(response.result.sync_variants)
+//   return {name: response.result.sync_product.name}
+// }
 }
 
 module.exports = PrintfulAPI
