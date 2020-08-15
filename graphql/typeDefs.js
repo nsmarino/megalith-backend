@@ -29,6 +29,35 @@ const typeDefs = gql`
   type Mutation {
       estimateOrderCosts(input: EstimateOrderCostsInput!): OrderCosts
       checkout(input: CheckoutInput!): PrintfulOrderInfo
+      createPaymentIntent(input: PaymentIntentInput!): PaymentIntent
+    }
+
+  input PaymentIntentInput {
+    description: String!
+    email: String!
+    total: Int!
+    metadata: PaymentIntentMeta!
+  }
+
+  type PaymentIntent {
+    id: ID!
+    clientSecret: String!
+    status: PaymentIntentStatus!
+  }
+
+  enum PaymentIntentStatus {
+    cancelled
+    processing
+    requires_action
+    requires_capture
+    requires_confirmation
+    requires_payment_method
+    requires_source
+    succeeded
+  }
+
+  input PaymentIntentMeta {
+    printfulOrderId: ID!
   }
 
   type PrintfulOrderInfo {

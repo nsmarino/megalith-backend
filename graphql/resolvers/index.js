@@ -4,6 +4,7 @@ const variants = require('./variantsResolver')
 
 const estimateOrderCosts = require('./mutations/estimateOrderCosts')
 const checkout = require('./mutations/checkout')
+const createPaymentIntent = require('./mutations/createPaymentIntent')
 
 const resolvers = {
     Query: {
@@ -16,6 +17,7 @@ const resolvers = {
     Mutation: {
       estimateOrderCosts,
       checkout,
+      createPaymentIntent,
     }
 }
 

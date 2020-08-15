@@ -1,4 +1,5 @@
 const checkout = async (_, { input }, { dataSources}) => {
+    console.log('processing order on apollo server')
     try {
 
       const data = await dataSources.printfulAPI.createOrder(input)
