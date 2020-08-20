@@ -2,7 +2,6 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 
-const chargeRouter = require('./chargeRouter') // Temporary test file containing strategy for stripe charges
 const webhookRouter = require('./webhookRouter') // The webhook should CONFIRM a drafted Printful order once Stripe payment succeeds.
 const apolloServer = require('./graphql')
 
@@ -10,7 +9,6 @@ const app = express()
 app.use(cors())
 app.use(express.json()) // body parser
 
-app.use('/charge', chargeRouter)
 app.use('/webhook', webhookRouter)
 apolloServer.applyMiddleware({ app })
 

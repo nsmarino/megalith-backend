@@ -36,13 +36,14 @@ const typeDefs = gql`
     description: String!
     email: String!
     total: Int!
-    metadata: PaymentIntentMeta!
+    orderId: ID!
   }
 
   type PaymentIntent {
     id: ID!
     clientSecret: String!
     status: PaymentIntentStatus!
+    description: String!
   }
 
   enum PaymentIntentStatus {
@@ -54,10 +55,6 @@ const typeDefs = gql`
     requires_payment_method
     requires_source
     succeeded
-  }
-
-  input PaymentIntentMeta {
-    printfulOrderId: ID!
   }
 
   type PrintfulOrderInfo {

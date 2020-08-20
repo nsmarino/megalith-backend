@@ -1,19 +1,20 @@
 const createPaymentIntent = async (_, { input }, { stripe }) => {
 
     try {
-      const { 
-        id, 
-        client_secret: clientSecret, 
-        status, 
-      } = await stripe.paymentIntents.create({
+      const paymentIntent = await stripe.paymentIntents.create({
           amount: input.total,
           currency: 'usd',
-          description: input.description,
-          metadata: input.metadata,
+          description: input.orderId,
           receipt_email: input.email,
       })
 
-      return { id, clientSecret, status }
+      return {
+        id: paymentIntent.id,
+        clientSecret: paymentIntent.client_secret,
+        status: paymentIntent.status,
+        description: paymentIntent.description,
+      }
+
     } catch (err) {
         return err
     }

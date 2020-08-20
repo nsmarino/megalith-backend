@@ -15,14 +15,12 @@ class PrintfulAPI extends RESTDataSource {
 
     async getAllProducts() {
       const response = await this.get('store/products')
-      console.log('this is the response',response)
       const products = response.result
       return products
     }
 
     async getVariants(id) {
       const response = await this.get(`store/products/${id}`)
-      // console.log(response.result.sync_variants)
       const variants = response.result.sync_variants.map(variant => {
         return {
           id: variant.id,
@@ -31,7 +29,6 @@ class PrintfulAPI extends RESTDataSource {
           sku: variant.sku,
         }
       })
-      console.log(variants)
       return variants
     }
 
@@ -63,7 +60,6 @@ class PrintfulAPI extends RESTDataSource {
 
 // async getProduct(id) {
 //   const response = await this.get(`store/products/${id}`)
-//   // console.log(response.result.sync_variants)
 //   return {name: response.result.sync_product.name}
 // }
 }
