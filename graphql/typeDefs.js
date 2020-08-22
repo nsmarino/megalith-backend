@@ -33,7 +33,6 @@ const typeDefs = gql`
     }
 
   input PaymentIntentInput {
-    description: String!
     email: String!
     total: Int!
     orderId: ID!
