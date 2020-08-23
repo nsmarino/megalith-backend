@@ -6,10 +6,10 @@ webhookRouter.post('/', async (request, response) => {
     const {
       data: { object: paymentIntent },
     } = request.body;
-    console.log(request.body)
+
     const printfulOrderId = paymentIntent.description
-    console.log(printfulOrderId)
-    await fetch(`https://api.printful.com/orders/${printfulOrderId}/confirm`, {
+    console.log('This is what will be sent as id: ', printfulOrderId)
+    const printfulConfirmation = await fetch(`https://api.printful.com/orders/${printfulOrderId}/confirm`, {
       headers: {
         Authorization: `Basic ${Buffer.from(
           process.env.PRINTFUL_API_KEY
@@ -17,11 +17,12 @@ webhookRouter.post('/', async (request, response) => {
       },
       method: 'post',
     });
+    console.log('response from printful: ', printfulConfirmation.body)
 
     response.json({received: true})
 
   } catch (err) {
-    console.log(err);
+    console.log('An error has occurred: ', err);
 
     return {
       statusCode: 500,
