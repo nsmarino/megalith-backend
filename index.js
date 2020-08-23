@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
     res.send('Backend for megalith.supply')
 })
 
-app.listen({ port: 4000 }, () => {
-    console.log(`express at port 4000, apollo at 4000${apolloServer.graphqlPath}, webhook at 4000/webhook`)
+const PORT = process.env.PORT || 4000
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 })
