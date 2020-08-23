@@ -8,8 +8,7 @@ webhookRouter.post('/', async (request, response) => {
     } = request.body;
 
     const printfulOrderId = paymentIntent.description
-    console.log('This is what will be sent as id: ', printfulOrderId)
-    const printfulConfirmation = await fetch(`https://api.printful.com/orders/${printfulOrderId}/confirm`, {
+    await fetch(`https://api.printful.com/orders/${printfulOrderId}/confirm`, {
       headers: {
         Authorization: `Basic ${Buffer.from(
           process.env.PRINTFUL_API_KEY
@@ -17,7 +16,6 @@ webhookRouter.post('/', async (request, response) => {
       },
       method: 'post',
     });
-    console.log('response from printful: ', printfulConfirmation.body)
 
     response.json({received: true})
 
