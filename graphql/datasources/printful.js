@@ -58,10 +58,6 @@ class PrintfulAPI extends RESTDataSource {
       }
     }
 
-// async getProduct(id) {
-//   const response = await this.get(`store/products/${id}`)
-//   return {name: response.result.sync_product.name}
-// }
 }
 
 module.exports = PrintfulAPI

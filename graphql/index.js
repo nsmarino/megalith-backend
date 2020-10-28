@@ -1,6 +1,8 @@
 const { ApolloServer } = require('apollo-server-express')
 const PrintfulAPI = require('./datasources/printful')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { STRIPE_SECRET_KEY } = require('../utils/config')
+
+const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 const typeDefs = require('./typeDefs')
 const resolvers = require('./resolvers');

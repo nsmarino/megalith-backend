@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "watch": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "deploy": "git push heroku master",
+    "deploy:full": "git add . && git commit && npm run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "",
   "license": "ISC",
@@ -13,12 +17,19 @@
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server": "^2.16.1",
     "apollo-server-express": "^2.16.1",
+    "apollo-server-testing": "^2.16.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "graphql": "^15.3.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "stripe": "^8.81.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "cross-fetch": "^3.0.5",
+    "graphql": "^15.3.0",
+    "jest": "^26.4.2",
+    "supertest": "^4.0.2"
   }
 }
