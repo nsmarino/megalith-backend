@@ -1,7 +1,10 @@
 const webhookRouter = require('express').Router()
 const fetch = require('node-fetch');
+const { PRINTFUL_API_KEY } = require('./utils/config')
 
 webhookRouter.post('/', async (request, response) => {
+  if (process.env.NODE_ENV === 'test') return
+  
   try {
     const {
       data: { object: paymentIntent },
@@ -11,7 +14,8 @@ webhookRouter.post('/', async (request, response) => {
     await fetch(`https://api.printful.com/orders/${printfulOrderId}/confirm`, {
       headers: {
         Authorization: `Basic ${Buffer.from(
-          process.env.PRINTFUL_API_KEY
+          // process.env.PRINTFUL_API_KEY
+          PRINTFUL_API_KEY
         ).toString('base64')}`,
       },
       method: 'post',
