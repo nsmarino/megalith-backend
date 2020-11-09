@@ -16,6 +16,7 @@ const server = new ApolloServer({
     context: () => ({
       stripe,
     }),
+    introspection: true,
 })
 
 module.exports = server
